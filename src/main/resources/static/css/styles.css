@@ -1,0 +1,33 @@
+.content {
+    border-radius:8px;
+    width: 500px;
+    border: 1px solid #d9d9d9;
+    overflow: hidden;
+}
+
+.contmeleft img {
+    width: 140px;
+    height: 90px;
+    object-fit: cover;
+    object-position: 0 70;
+    margin-right: 10px;
+    float: left;
+}
+
+.red {
+    background-color: #c50d0d;
+}
+
+.div-buttons {
+    display: inline-block;
+    float: left;
+}
+
+.books {
+
+}
+
+.expired {
+    color: black;
+}
+

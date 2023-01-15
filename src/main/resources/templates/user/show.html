@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous">
+    <title th:text="${user.fullName}"></title>
+</head>
+    <body>
+        <div th:insert="fragments/navbar :: navbar"></div>
+        <div class="container">
+            <h1>Пользователь: <span style="font-weight: normal"><nobr th:text="${user.fullName}"></nobr></span></h1><hr>
+            <div class="content">
+                <img th:src="@{/images/user-avatar.png}" th:width="100" th:height="100" th:align="left">
+                <div style="font-weight: bold">Дата рождения: <span style="font-weight: normal" th:text="${user.dob}"></span></div>
+                <div style="font-weight: bold">Email: <span style="font-weight: normal" th:text="${user.email}"></span></div>
+                <div style="font-weight: bold">Адрес проживания: <span style="font-weight: normal" th:text="${user.address}"></span></div>
+            </div><br>
+
+            <p class="div-buttons">
+                <a class="btn btn-outline-success btn-sm" th:href="@{/users/{id}/edit(id=${user.id})}">Редактировать</a>
+                <a style="margin-left: 10px" class="btn btn-outline-success btn-sm" th:href="@{/users/{id}/email-change(id=${user.id})}">Сменить почту</a>
+
+                <form th:method="DELETE" th:action="@{/users/{id}(id=${user.id})}">
+                    <input style="margin-left: 10px" class="btn btn-outline-danger btn-sm" type="submit" value="Удалить">
+                </form>
+            </p>
+
+            <div class="books">
+                <div th:if="${!user.books.isEmpty()}">
+                    <h2>Список книг</h2>
+                    <ul>
+                        <li th:each="book : ${user.books}">
+                            <p th:style="${book.expired ? 'color: red' : 'color: black;'}" th:text="${book.name}">book</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div th:if="${user.books.isEmpty()}">
+                    <h2>Список книг</h2>
+                    <p>Нет читаемых книг.</p>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    </body>
+</html>

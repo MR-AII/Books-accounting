@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title th:text="${book.name}"></title>
+</head>
+    <body>
+        <div th:insert="fragments/navbar :: navbar"></div>
+
+        <div class="container">
+            <h1>Книга: <span style="font-weight: normal"><nobr th:text="${book.name}"></nobr></span></h1><hr>
+            <div class="content">
+                <img th:src="@{/images/book.png}" th:width="120" th:height="120" th:align="left">
+                <div style="font-weight: bold">Год публикации: <span style="font-weight: normal" th:text="${book.yearOfPublication}"></span></div>
+                <div style="font-weight: bold">Автор: <span style="font-weight: normal" th:text="${book.author}"></span></div>
+
+                <div th:if="${book.reader == null}">
+                    <p>Нет читателя</p>
+                    <form th:method="PATCH" th:action="@{/books/{id}/add-reader(id=${book.id})}">
+                        <select class="form-select form-select-sm w-25" aria-label=".form-select-sm example" th:object="${user}" th:field="*{id}">
+                            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.fullName}"></option>
+                        </select>
+
+                        <input class="btn btn-outline-success" type="submit" value="Назначить">
+                    </form>
+                </div>
+
+                <div th:if="${book.reader != null}">
+                    <div style="font-weight: bold">Читатель: <span style="font-weight: normal" th:text="${book.reader.fullName}"></span></div>
+                    <form th:method="PATCH" th:action="@{/books/{id}/remove-reader(id=${book.id})}">
+                        <input class="btn btn-outline-success" type="submit" value="снять читателя">
+                    </form>
+                </div>
+            </div>
+
+            <p class="div-buttons">
+                <a class="btn btn-outline-success btn-sm" th:href="@{/books/{id}/edit(id=${book.id})}">Редактировать</a>
+            <form th:method="DELETE" th:action="@{/books/{id}(id=${book.id})}">
+                <input style="margin-left: 10px" class="btn btn-outline-danger btn-sm" type="submit" value="Удалить">
+            </form>
+            </p>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    </body>
+</html>

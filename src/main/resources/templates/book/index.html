@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Книги</title>
+</head>
+    <body>
+        <div th:insert="fragments/navbar :: navbar"></div>
+
+        <div class="container">
+            <h1>Книги</h1>
+
+            <a href="/books/new">Добавить книгу</a><br><hr>
+
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm">
+                    <li class="page-item"><a class="page-link" th:href="@{/books(page=${currentPage - 1})}">Previous</a></li> <!-- PREV -->
+
+                    <li class="page-item active" aria-current="page"><a class="page-link"  href="/books?page=0">0</a></li>
+                    <li class="page-item"><a class="page-link" href="/books?page=1">1</a></li>
+                    <li class="page-item"><a class="page-link" href="/books?page=2">2</a></li>
+
+                    <li class="page-item"><a class="page-link" th:href="@{/books(page=${currentPage + 1})}">Next</a></li> <!-- NEXT -->
+                </ul>
+            </nav>
+
+            <div th:each="book : ${books}">
+                <a style="font-weight: bold" th:href="@{/books/{id}(id=${book.id})}"
+                   th:text="${book.name} + ', ' + ${book.author} + ', ' + ${book.yearOfPublication}">name, author, year</a>
+            </div><br>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    </body>
+</html>
